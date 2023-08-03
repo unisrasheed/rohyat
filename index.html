@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Multi-Step Form</title>
+</head>
+<body>
+
+<form id="multiStepForm">
+  <div id="step1">
+    <h2>Step 1</h2>
+    <label for="firstname">First Name:</label>
+    <input type="text" id="firstname" required><br>
+
+    <label for="lastname">Last Name:</label>
+    <input type="text" id="lastname" required><br>
+
+    <button type="button" onclick="nextStep(2)">Next</button>
+  </div>
+
+  <div id="step2" style="display: none;">
+    <h2>Step 2</h2>
+    <label for="email">Email:</label>
+    <input type="email" id="email" required><br>
+
+    <label for="phone">Phone:</label>
+    <input type="tel" id="phone" required><br>
+
+    <button type="button" onclick="prevStep(1)">Previous</button>
+    <button type="button" onclick="nextStep(3)">Next</button>
+  </div>
+
+  <div id="step3" style="display: none;">
+    <h2>Step 3</h2>
+    <label for="message">Message:</label>
+    <textarea id="message" required></textarea><br>
+
+    <button type="button" onclick="prevStep(2)">Previous</button>
+    <button type="submit">Submit</button>
+  </div>
+</form>
+
+<script>
+  let currentStep = 1;
+
+  function showStep(step) {
+    const steps = document.querySelectorAll('[id^="step"]');
+    for (const s of steps) {
+      s.style.display = 'none';
+    }
+    document.getElementById(`step${step}`).style.display = 'block';
+  }
+
+  function nextStep(next) {
+    if (validateStep(currentStep)) {
+      currentStep = next; 
+      showStep(next);
+    }
+  }
+
+  function prevStep(prev) {
+    currentStep = prev;
+    showStep(prev);
+  }
+
+  function validateStep(step) {
+    // Add validation logic for each step here if needed
+    if (step === 1) {
+      const firstname = document.getElementById('firstname').value;
+      const lastname = document.getElementById('lastname').value;
+      if (firstname === '' || lastname === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+    } else if (step === 2) {
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone').value;
+      if (email === '' || phone === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.getElementById('multiStepForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Add code to handle form submission here
+    alert('Form submitted successfully!');
+    // Reset form and go back to Step 1
+    currentStep = 1;
+    showStep(1);
+  });
+</script>
+
+</body>
+</html>
+
+
+
+  /*
+  const $nextBtn1 = $('#lp-pom-button-486');
+  
+   $nextBtn1.click(function() {
+    // Call the nextStep function and pass the step number (2) as an argument
+    nextStep(2);
+  });
+  
+  
+  const $nextBtn2 = $('#lp-pom-button-487');
+  
+   $nextBtn1.click(function() {
+    // Call the nextStep function and pass the step number (2) as an argument
+    nextStep(3);
+  });
+  
+   const $prevBtn1 = $('#lp-pom-button-488');
+  
+   $nextBtn1.click(function() {
+    // Call the nextStep function and pass the step number (2) as an argument
+    prevStep(1);
+  });
+  
+   const $prevBtn2 = $('#lp-pom-button-489);
+  
+   $nextBtn1.click(function() {
+    // Call the nextStep function and pass the step number (2) as an argument
+    prevStep(2);
+  });
+  
+  
+  
+  
+  let currentStep = 1;
+
+  function showStep(step) {
+    const steps = document.querySelectorAll('[id^="step"]');
+    for (const s of steps) {
+      s.style.display = 'none';
+    }
+    document.getElementById(`step${step}`).style.display = 'block';
+  }
+
+  function nextStep(next) {
+    if (validateStep(currentStep)) {
+      currentStep = next;
+      showStep(next);
+    }
+  }
+
+  function prevStep(prev) {
+    currentStep = prev;
+    showStep(prev);
+  }
+
+  function validateStep(step) {
+    // Add validation logic for each step here if needed
+    if (step === 1) {
+      const firstname = document.getElementById('first_name').value;
+      const lastname = document.getElementById('last_name').value;
+      if (firstname === '' || lastname === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+    } else if (step === 2) {
+      const email = document.getElementById('email').value;
+      const phone = document.getElementById('phone_number').value;
+      if (email === '' || phone === '') {
+        alert('Please fill in all fields.');
+        return false;
+      }
+    }
+    return true;
+  }
+
+  document.getElementById('multiStepForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    // Add code to handle form submission here
+    alert('Form submitted successfully!');
+    // Reset form and go back to Step 1
+    currentStep = 1;
+    showStep(1);
+  });
